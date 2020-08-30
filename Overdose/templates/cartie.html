@@ -1,0 +1,97 @@
+{% extends 'backup.html' %}
+{% block css %}
+.card {
+    width:1000px;
+    margin: 0px;
+    height: 200px;
+    border: 1px solid #ccc;
+    padding-left: 20px;
+    transition: box-shadow 0.2s ease-in-out, transform 0.35s ease-in-out;
+    margin-left:450px;
+    
+    
+  }
+  .gdUKd9 {
+    
+    text-transform: uppercase;
+    box-shadow: none;
+    outline: 0;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left:830px;
+    margin-top:20px;
+}
+.place{
+  
+  margin-left:220px;
+    
+}
+  {% endblock %}
+{% block body %}
+<br>
+{% for post in cats %}
+<article class="card" style="height:150px;">
+    <div class="row">
+      <table id="t2" style="width: 90%; margin-top: 50px;">
+        <tr>
+          <td class="details" style="margin-top:30px;margin-left: 5px;font-weight:400;color: black;font-size: 30px; width: 50%; padding-left: 15px; ">{{post.item}} </td>
+          <td class="details" style="margin-top:25px;margin-left: 5px;font-weight:400;color: black;font-size: 30px;" >Qty: <span style="margin-top:40px;" value="{{post.quantity}}" id="quantity">{{post.quantity}}</span></td>
+          <td class="details" style="margin-top:30px;margin-left: 5px;font-weight:400;color: black;font-size: 30px;" >Rs.<span value="{{post.price}}" id="number">{{post.price}}</span></td>
+          
+          
+          
+        </tr>
+      
+      </table>
+      </div>
+      <a class="removebutton gdUKd9" id="remove{{ post.id }}" href="#" name="rem" data-catid="{{ post.id }}">Remove</a>
+      
+    </article>
+{% endfor %}
+<br><br>
+{% if thank %}
+<article class="card"style="height:100px;" class="">
+  <div class="row">
+    <table id="t2" style="width:90%;margin-top:25px;">
+      <tr>
+        <td class="details" style="margin-top:30px;margin-left:5px;font-weight:300;color: black;font-size: 30px; width: 50%; padding-left: 15px; ">Total Price </td>
+        <td class="details" style="margin-top:30px;margin-left: 5px;font-weight:300;color: black;font-size: 30px;"><span id="rs">Rs.</span>{{price}}</td>
+        
+        <td><a href="/Overdose/checkout" class="place btn btn-outline-success ">Place Order</a></td>
+        
+        
+      </tr>
+    
+    </table>
+    </div>
+    </article> 
+    <br><br>
+{% else %}
+    <h2 style="margin-top: 300px;margin-left: 450px;">You have Zero item in the cart please add some to place the order.</h2>
+{% endif %}       
+{% endblock %}
+{% block js %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script type="text/javascript">  
+$('.removebutton').click(function(){ 
+var id; 
+id = $(this).attr("data-catid"); 
+console.log(id);
+$.ajax( 
+{ 
+    type:"GET", 
+    url: "/Overdose/remove", 
+    data:{ 
+             post_id: id 
+}, 
+success: function( data ) 
+{ 
+    window.location.reload()
+    $( '#remove'+ id ).removeClass(''); 
+    $( '#remove'+ id ).addClass(''); } }) });
+
+
+</script>
+{% endblock %}

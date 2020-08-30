@@ -1,0 +1,97 @@
+{% extends 'backup.html' %}
+
+{% block css %}
+* {
+    font-family: sans-serif;
+  }
+  .card {
+    width:1000px;
+    margin: 20px;
+    height: 150px;
+    border: 1px solid #ccc;
+    padding-left: 20px;
+    transition: box-shadow 0.2s ease-in-out, transform 0.35s ease-in-out;
+    margin-left:450px;
+    margin-top:50px;
+    
+  }
+  
+  .card:hover {
+    box-shadow: 0 11px 11px 0 rgba(0, 0, 0,.16);
+    transform: translateY(-5px);
+  }
+
+{% endblock %}
+{% block body %}
+<h1 style="font-weight:600;color: black;font-size: 50px;margin-left: 450px;margin-top: 50px;">Veg.</h1>
+{% for post in vegitems %}
+<article class="card" class="">
+  <div class="row">
+    <table id="t2" style="width: 90%; margin-top: 50px;">
+      <tr>
+        <td class="details" style="margin-top:30px;margin-left: 5px;font-weight:300;color: black;font-size: 30px; width: 50%; padding-left: 15px; ">{{post.item_name}} </td>
+        <td class="details" style="margin-top:30px;margin-left: 5px;font-weight:300;color: black;font-size: 30px;"> Rs.{{post.price}}</td>
+        <td><a class="likebutton btn btn-outline-info" id="like{{ post.id }}" href="#" data-catid="{{ post.id }}" style="margin-left:150px;">Add To Cart</a></td>
+        <td><a href="/Overdose/checkout" class="btn btn-outline-info" style="margin-left:40px;"> Order  </a></td>
+      </tr>
+    
+    </table>
+    </div>
+  </article>
+  {% endfor %}
+  <h1 style="font-weight:600;color: black;font-size: 50px;margin-left: 450px;margin-top: 100px;">Non-Veg.</h1>
+  {% for post in nonvegitems %}
+<article class="card" class="">
+  <div class="row">
+    <table id="t2" style="width: 90%; margin-top: 50px;">
+      <tr>
+        <td class="details" style="margin-top:30px;margin-left: 5px;font-weight:300;color: black;font-size: 30px; width: 50%; padding-left: 15px; ">{{post.item_name}} </td>
+        <td class="details" style="margin-top:30px;margin-left: 5px;font-weight:300;color: black;font-size: 30px;"> Rs.{{post.price}}</td>
+        <td><a class="likebutton btn btn-outline-info" id="like{{ post.id }}" href="#" data-catid="{{ post.id }}" style="margin-left:150px;">Add To Cart</a></td>
+        <td><a href="/Overdose/checkout" class="btn btn-outline-info" style="margin-left:40px;"> Order  </a></td>
+      </tr>
+    
+    </table>
+    </div>
+  </article>
+  {% endfor %}
+  {% endblock %}
+<!--<!DOCTYPE html>
+<html>
+<head>
+    <title>Like Post App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class = "display-3 color-red"><center>DataFlair AJAX Tutorial<br>Post APP</center></div>
+    {% for post in items %}
+        <div class = 'container jumbotron'>
+        <h3 class="display-5">{{ forloop.counter }}. {{ post.item_name }}</h3>
+<p class="lead">{{ post.price }} </p>
+        <p>
+        <div type="text/css" class = "container">Category : {{ post.category}}</div> 
+        <a class="likebutton btn btn-primary btn-lg" id="like{{ post.id }}" href="#" data-catid="{{ post.id }}">Like</a> </p> 
+
+</div>
+{% endfor %}--> 
+{% block js %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script type="text/javascript"> 
+$('.likebutton').click(function(){ 
+var id; 
+id = $(this).attr("data-catid"); 
+$.ajax( 
+{ 
+    type:"GET", 
+    url: "/Overdose/cart", 
+    data:{ 
+             post_id: id 
+}, 
+success: function( data ) 
+{ 
+    $( '#like'+ id ).removeClass('btn btn-outline-info'); 
+    $( '#like'+ id ).addClass('btn btn-outline-success'); } }) });
+</script>
+{% endblock %}
