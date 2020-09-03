@@ -61,7 +61,7 @@ def register(request):
         phone=request.POST['phone']
         password=request.POST['password']
         check=auth.authenticate(username=username)
-        if check is not None:
+        if check is None:
             return HttpResponse("User already exist")
         else:
             user=User.objects.create_user(username=username,first_name=fname,last_name=lname,email=email,password=password)
